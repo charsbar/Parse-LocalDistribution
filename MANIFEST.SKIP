@@ -15,4 +15,4 @@
 ^cover_db/
 ^nytprof/
 nytprof.out
-MYMETA.*
+^MYMETA\.

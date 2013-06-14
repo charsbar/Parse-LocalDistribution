@@ -14,6 +14,7 @@ my %params = (
         'Parse::PMFile' => '0.03',
     },
     BUILD_REQUIRES => {
+        'File::Path' => 0,
         'Test::More'          => '0.47',
         'Test::UseAllModules' => '0.10',
     },

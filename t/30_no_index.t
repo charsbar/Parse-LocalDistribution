@@ -2,12 +2,12 @@ use strict;
 use warnings;
 use FindBin;
 use Test::More;
-use File::Temp;
+use File::Path;
 use Parse::LocalDistribution;
 
-my $dir = File::Temp->newdir("PARSE_LOCAL_DIST_XXXX", CLEANUP => 1, TMPDIR => 1);
+my $pid = $$;
+my $dir = "$FindBin::Bin/fake";
 $dir =~ s|\\|/|g;
-warn $dir;
 eval {
   unless (-d $dir) {
     mkdir $dir or die "failed to create a temporary directory: $!";
@@ -45,10 +45,8 @@ ok $provides && !$provides->{ParseLocalInc}, "TestParseLocalInc is ignored";
 note explain $provides;
 note explain $p;
 
-if (-d $dir) {
-  unlink "$dir/lib/TestParseLocalDist.pm";
-  unlink "$dir/inc/TestParseLocalInc.pm";
-  unlink "$dir/META.json";
-  rmdir "$dir/lib";
-  rmdir "$dir";
+END {
+  if (-d $dir && $pid eq $$) {
+    rmtree $dir;
+  }
 }

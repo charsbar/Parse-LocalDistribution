@@ -2,8 +2,10 @@ use strict;
 use warnings;
 use FindBin;
 use Test::More;
+use File::Path;
 use Parse::LocalDistribution;
 
+my $pid = $$;
 my $dir = "$FindBin::Bin/fake";
 eval {
   unless (-d $dir) {
@@ -27,8 +29,8 @@ my $provides = $p->parse($dir);
 ok $provides && $provides->{ParseLocalDistTest}{version} eq '0.01', "correct version";
 note explain $provides;
 
-if (-d $dir) {
-  unlink "$dir/lib/ParseLocalDistTest.pm";
-  rmdir "$dir/lib";
-  rmdir "$dir";
+END {
+  if (-d $dir && $pid eq $$) {
+    rmtree $dir;
+  }
 }

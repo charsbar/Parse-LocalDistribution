@@ -56,6 +56,12 @@ sub _extract_meta {
   my $yaml = List::Util::reduce { length $a < length $b ? $a : $b }
              grep !m|/t/|, grep m|/META\.yml$|, @manifind;
 
+  # META.json located only in a subdirectory should not precede
+  # META.yml located in the top directory. (eg. Test::Module::Used 0.2.4)
+  if ($json && $yaml && length($json) > length($yaml) + 1) {
+    $json = '';
+  }
+
   unless ($json || $yaml) {
     $self->{METAFILE} = "No META.yml or META.json found";
     $self->_verbose(1,"No META.yml or META.json in $dist");

@@ -12,10 +12,13 @@ my @tests = (
   # malformatted provides field
   ['D/DJ/DJERIUS/Lua-API-0.02.tar.gz', 'Lua::API', undef],
   ['M/MU/MURPHY/Syntax-SourceHighlight-1.0.1.tar.gz', 'Syntax::SourceHighlight', undef],
+
+  # invalid version
+  ['P/PI/PIP/XML-Tidy-1.12.B55J2qn.tgz', 'XML::Tidy', undef, 1],
 );
 
 for my $test (@tests) {
-  my ($path, $package, $version) = @$test;
+  my ($path, $package, $version, $has_error) = @$test;
   note "downloading $path...";
 
   my $worepan = WorePAN->new(
@@ -35,6 +38,9 @@ for my $test (@tests) {
       ok !$@ && ref $info eq ref {} && $info->{$package}{version} eq $version, "parsed successfully in time";
     } else {
       ok !$@ && ref $info eq ref {} && !defined $info->{$package}{version}, "parsed successfully in time";
+      if ($has_error) {
+        ok !$@ && ref $info eq ref {} && defined $info->{$package}{parse_version_error}, "invalid version is stored";
+      }
     }
     note $@ if $@;
     note explain $info;

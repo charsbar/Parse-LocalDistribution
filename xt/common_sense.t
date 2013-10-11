@@ -15,6 +15,7 @@ my @tests = (
 
   # invalid version
   ['P/PI/PIP/XML-Tidy-1.12.B55J2qn.tgz', 'XML::Tidy', undef, 1],
+  ['C/CF/CFUHRMAN/Log-Fine-0.64.tar.gz', 'Log::Fine::Formatter', undef, 1],
 );
 
 for my $test (@tests) {

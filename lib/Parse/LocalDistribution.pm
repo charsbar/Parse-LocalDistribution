@@ -127,7 +127,7 @@ sub _examine_pms {
       if ($errs) {
         for my $package (keys %$errs) {
           for (keys %{$errs->{$package}}) {
-            $result{$package}{$_.'_error'} = $errs->{$package}{$_};
+            $result{$package}{$_ eq 'infile' ? $_ : $_.'_error'} = $errs->{$package}{$_};
           }
         }
       }
@@ -156,7 +156,7 @@ sub _examine_pms {
       if ($errs) {
         for my $package (keys %$errs) {
           for (keys %{$errs->{$package}}) {
-            $result{$package}{$_.'_error'} = $errs->{$package}{$_};
+            $result{$package}{$_ eq 'infile' ? $_ : $_.'_error'} = $errs->{$package}{$_};
           }
         }
       }

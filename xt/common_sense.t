@@ -16,6 +16,8 @@ my @tests = (
   # invalid version
   ['P/PI/PIP/XML-Tidy-1.12.B55J2qn.tgz', 'XML::Tidy', undef, 1],
   ['C/CF/CFUHRMAN/Log-Fine-0.64.tar.gz', 'Log::Fine::Formatter', undef, 1],
+
+  ['R/RI/RIBASUSHI/DBIx-Class-Manual-SQLHackers-1.3.tar.gz', '', undef, 1],
 );
 
 for my $test (@tests) {
@@ -34,15 +36,21 @@ for my $test (@tests) {
 
   $worepan->walk(callback => sub {
     my $dir = shift;
+    my @warnings;
+    local $SIG{__WARN__} = sub { push @warnings, @_ };
     my $info = eval { Parse::LocalDistribution->new($dir)->parse };
-    if (defined $version) {
-      ok !$@ && ref $info eq ref {} && $info->{$package}{version} eq $version, "parsed successfully in time";
-    } else {
-      ok !$@ && ref $info eq ref {} && !defined $info->{$package}{version}, "parsed successfully in time";
-      if ($has_error) {
-        ok !$@ && ref $info eq ref {} && defined $info->{$package}{parse_version_error}, "invalid version is stored";
+    if ($package) {
+      if (defined $version) {
+        ok !$@ && ref $info eq ref {} && $info->{$package}{version} eq $version, "parsed successfully in time";
+      } else {
+        ok !$@ && ref $info eq ref {} && !defined $info->{$package}{version}, "parsed successfully in time";
+        if ($has_error) {
+          ok !$@ && ref $info eq ref {} && defined $info->{$package}{parse_version_error}, "invalid version is stored";
+        }
       }
     }
+    ok !@warnings;
+    note explain \@warnings if @warnings;
     note $@ if $@;
     note explain $info;
   });

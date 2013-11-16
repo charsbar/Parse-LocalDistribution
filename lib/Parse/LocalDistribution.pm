@@ -95,7 +95,8 @@ sub _examine_pms {
   my $dist = $self->{DIST};
 
   my $pmfiles = $self->_filter_pms;
-  my($meta,$provides,$indexingrule);
+  my($meta,$provides);
+  my $indexingrule = 0;
   if (my $version_from_meta_ok = $self->_version_from_meta_ok) {
     $meta = $self->{META_CONTENT};
     $provides = $meta->{provides};

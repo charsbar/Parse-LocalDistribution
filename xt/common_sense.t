@@ -9,6 +9,8 @@ my @tests = (
   ['B/BE/BEPPU/Squatting-0.82.tar.gz', 'Squatting', '0.82'],
   ['R/RK/RKINYON/Tree-Compat-1.00.tar.gz', 'Tree::Compat', '1.00'],
 
+  ['E/ET/ETHER/Hash-Util-FieldHash-Compat-0.05.tar.gz', 'Hash::Util::FieldHash::Compat', '0.05'],
+
   # malformatted provides field
   ['D/DJ/DJERIUS/Lua-API-0.02.tar.gz', 'Lua::API', undef],
   ['M/MU/MURPHY/Syntax-SourceHighlight-1.0.1.tar.gz', 'Syntax::SourceHighlight', undef],

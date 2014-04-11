@@ -136,7 +136,7 @@ sub _index_by_files {
     if ($errs) {
       for my $package (keys %$errs) {
         for (keys %{$errs->{$package}}) {
-          $result{$package}{$_ eq 'infile' ? $_ : $_.'_error'} = $errs->{$package}{$_};
+          $result{$package}{$_ =~ /infile|warning/ ? $_ : $_.'_error'} = $errs->{$package}{$_};
         }
       }
     }

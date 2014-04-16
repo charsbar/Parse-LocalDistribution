@@ -20,6 +20,9 @@ my @tests = (
   ['C/CF/CFUHRMAN/Log-Fine-0.64.tar.gz', 'Log::Fine::Formatter', undef, 1],
 
   ['R/RI/RIBASUSHI/DBIx-Class-Manual-SQLHackers-1.3.tar.gz', '', undef, 1],
+
+  # overriden by another non-simile package version
+  ['GFUJI/Text-Xslate-3.2.0.tar.gz', 'Text::Xslate', '3.002000'],
 );
 
 for my $test (@tests) {

@@ -253,6 +253,7 @@ sub _filter_pms {
           my $rest = $map{$k};
           if (ref $v eq "ARRAY") {
             for my $ve (@$v) {
+              $ve =~ s|\\|/|g; # Class-InsideOut-0.90_01
               $ve =~ s|/+$||;
               if ($inmf =~ /^$ve$rest/){
                 $self->_verbose(1,"Skipping inmf[$inmf] due to ve[$ve]");

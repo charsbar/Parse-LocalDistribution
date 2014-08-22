@@ -23,6 +23,9 @@ my @tests = (
 
   # overriden by another non-simile package version
   ['GFUJI/Text-Xslate-3.2.0.tar.gz', 'Text::Xslate', '3.002000'],
+
+  # (illegal) no_index entries with backslashes
+  ['DAGOLDEN/Class-InsideOut-0.90_01.tar.gz', 'Class::InsideOut', '0.90_01', 1],
 );
 
 for my $test (@tests) {
@@ -58,7 +61,7 @@ for my $test (@tests) {
     note explain \@warnings if @warnings;
     note $@ if $@;
     note explain $info;
-  });
+  }, developer_releases => 1);
 }
 
 done_testing;

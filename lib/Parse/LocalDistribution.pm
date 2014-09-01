@@ -122,7 +122,7 @@ sub _index_by_files {
   my $dist = $self->{DIST};
 
   my %result;
-  my $parser = Parse::PMFile->new($self->{META_CONTENT});
+  my $parser = Parse::PMFile->new($self->{META_CONTENT}, $self);
   for my $pmfile (@$pmfiles) {
     my $pmfile_abs = File::Spec->catfile($self->{DISTROOT}, $pmfile);
     $pmfile_abs =~ s|\\|/|g;
@@ -157,7 +157,6 @@ sub _index_by_meta {
   my $dist = $self->{DIST};
 
   my %result;
-  my $parser = Parse::PMFile->new($self->{META_CONTENT});
   while (my($k,$v) = each %$provides) {
     next if ref $v ne ref {};
     next if !defined $v->{file} or $v->{file} eq '';
@@ -207,7 +206,9 @@ sub _examine_pkg {
       return;
   }
 
-  # Can't do perm_check() here.
+  if ($self->{USERID} && $self->{PERMISSIONS} && !$self->_perm_check($package)) {
+      return;
+  }
 
   # No parser problem should be found
   # (only used for META provides in this module)
@@ -290,6 +291,7 @@ sub _filter_pms {
 
 sub _version_from_meta_ok { Parse::PMFile::_version_from_meta_ok(@_) }
 sub _verbose { Parse::PMFile::_verbose(@_) }
+sub _perm_check { Parse::PMFile::_perm_check(@_) }
 
 # instead of ExtUtils::Manifest::manifind()
 # which only looks for files under the current directory.
@@ -393,7 +395,7 @@ Parse::LocalDistribution - parses local .pm files as PAUSE does
 
 =head1 DESCRIPTION
 
-This is a sister module of L<Parse::PMFile>. This module parses local .pm files (and a META file if any) in a specific (current if not specified) directory, and returns a hash reference that represents "provides" information (with some extra meta data). This is almost the same as L<Module::Metadata> does (which has been in Perl core since Perl 5.13.9). The main difference is the most of the code of this module is directly taken from the PAUSE code as of June 2013. If you need better compatibility to PAUSE, try this. If you need better performance, safety, or portability in general, L<Module::Metadata> may be a better and handier option (L<Parse::PMFile> (and thus L<Parse::LocalDistribution>) forks internally and actually evaluates code in the $VERSION line (in a Safe compartment), both of which may be problematic in some cases).
+This is a sister module of L<Parse::PMFile>. This module parses local .pm files (and a META file if any) in a specific (current if not specified) directory, and returns a hash reference that represents "provides" information (with some extra meta data). This is almost the same as L<Module::Metadata> does (which has been in Perl core since Perl 5.13.9). The main difference is the most of the code of this module is directly taken from the PAUSE code as of June 2013. If you need better compatibility to PAUSE, try this. If you need better performance, safety, or portability in general, L<Module::Metadata> may be a better and handier option (L<Parse::PMFile> (and thus L<Parse::LocalDistribution>) actually evaluates code in the $VERSION line (in a Safe compartment), which may be problematic in some cases).
 
 This module doesn't provide a feature to extract a distribution. If you are too lazy to implement it, L<CPAN::ParseDistribution> may be another good option.
 

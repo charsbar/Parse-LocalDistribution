@@ -7,6 +7,6 @@ requires 'Parse::PMFile' => '0.21';
 on test => sub {
   requires 'File::Path' => 0;
   requires 'File::Temp' => 0;
-  requires 'Test::More' => '0.47';
+  requires 'Test::More' => '0.88';
   requires 'Test::UseAllModules' => '0.10';
 };

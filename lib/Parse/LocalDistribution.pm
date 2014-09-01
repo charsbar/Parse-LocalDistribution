@@ -12,9 +12,12 @@ use Cwd ();
 our $VERSION = '0.13';
 
 sub new {
-  my ($class, $root) = @_;
+  my ($class, $root, $opts) = @_;
+  if (ref $root eq ref {} && !$opts) {
+    $opts = $root; $root = undef;
+  }
   $root ||= Cwd::cwd();
-  bless {DISTROOT => $root, DIST => $root}, $class;
+  bless {%{ $opts|| {} }, DISTROOT => $root, DIST => $root}, $class;
 }
 
 # adapted from PAUSE::mldistwatch#check_for_new
@@ -385,8 +388,7 @@ Parse::LocalDistribution - parses local .pm files as PAUSE does
 
     use Parse::LocalDistribution;
 
-    local $Parse::PMFile::ALLOW_DEV_VERSION = 1;
-    my $parser = Parse::LocalDistribution->new;
+    my $parser = Parse::LocalDistribution->new({ALLOW_DEV_VERSION => 1});
     my $provides = $parser->parse('.');
 
 =head1 DESCRIPTION
@@ -399,7 +401,27 @@ This module doesn't provide a feature to extract a distribution. If you are too 
 
 =head2 new
 
-creates an object.
+creates an object. You can pass an optional path and/or an optional hashref to configure. Options are:
+
+=over 4
+
+=item ALLOW_DEV_VERSION
+
+Parse::LocalDistribution (actually L<Parse::PMFile>) usually ignores a version with an underscore as PAUSE does (because it's for a developer release, and should not be indexed). Set this option to true if you happen to need to keep such a version for better analysis.
+
+=item VERBOSE
+
+Set this to true if you need to know some details.
+
+=item FORK
+
+If you really need to let Parse::PMFile fork while parsing a version (as PAUSE does), set this to true.
+
+=item USERID, PERMISSIONS
+
+Parse::LocalDistribution checks permissions of a package if both USERID and PERMISSIONS (which should be an instance of L<PAUSE::Permissions>) are provided. Unauthorized packages are removed.
+
+=back
 
 =head2 parse
 

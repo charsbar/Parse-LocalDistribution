@@ -16,8 +16,8 @@ my @tests = (
   ['M/MU/MURPHY/Syntax-SourceHighlight-1.0.1.tar.gz', 'Syntax::SourceHighlight', undef],
 
   # invalid version
-  ['P/PI/PIP/XML-Tidy-1.12.B55J2qn.tgz', 'XML::Tidy', undef, 1],
-  ['C/CF/CFUHRMAN/Log-Fine-0.64.tar.gz', 'Log::Fine::Formatter', undef, 1],
+  ['P/PI/PIP/XML-Tidy-1.12.B55J2qn.tgz', 'XML::Tidy', 'undef', 1],
+  ['C/CF/CFUHRMAN/Log-Fine-0.64.tar.gz', 'Log::Fine::Formatter', 'undef', 1],
 
   ['R/RI/RIBASUSHI/DBIx-Class-Manual-SQLHackers-1.3.tar.gz', '', undef, 1],
 

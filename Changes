@@ -1,5 +1,9 @@
 Revision history for Parse-LocalDistribution
 
+0.15 2015/01/17
+  - bumped up the required version of Parse::PMFile to 0.35
+    to tolerate version line errors as undef
+
 0.14 2014/09/02
   - permission check
   - constructor options

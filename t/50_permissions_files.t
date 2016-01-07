@@ -48,7 +48,7 @@ eval {
 };
 plan skip_all => $@ if $@;
 
-my $permissions = PAUSE::Permissions->new(path => "$dir/tmp/06perms.txt");
+my $permissions = PAUSE::Permissions->new(path => "$dir/tmp/06perms.txt", preload => 1);
 
 for my $fork (0..1) {
   for my $user (qw/FIRSTCOME MAINT COMAINT UNKNOWN/) {

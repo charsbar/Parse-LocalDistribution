@@ -223,7 +223,15 @@ sub _examine_pkg {
           return;            # don't screw up 02packages
       }
   }
+  return unless $self->_version_ok($pp);
+
   $pp;
+}
+
+sub _version_ok {
+  my ($self, $pp) = @_;
+  return if length($pp->{version} || 0) > 16;
+  return 1
 }
 
 # from PAUSE::dist;

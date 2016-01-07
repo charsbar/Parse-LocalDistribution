@@ -21,6 +21,9 @@ my @tests = (
 
   ['R/RI/RIBASUSHI/DBIx-Class-Manual-SQLHackers-1.3.tar.gz', '', undef, 1],
 
+  # too long version
+  ['REEDFISH/Net-FullAuto-0.9999999999999928.tar.gz', '', undef, 1],
+
   # overriden by another non-simile package version
   ['GFUJI/Text-Xslate-3.2.0.tar.gz', 'Text::Xslate', '3.002000'],
 

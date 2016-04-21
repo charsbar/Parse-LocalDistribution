@@ -1,5 +1,9 @@
 Revision history for Parse-LocalDistribution
 
+0.17 2016/04/21
+  - benchmark revealed unnecessary cwd() took more time than
+    expected/wanted
+
 0.16 2016/01/07
   - ported version_ok() implemented in PAUSE to disallow a VERSION
     that is too long to store correctly in the PAUSE database

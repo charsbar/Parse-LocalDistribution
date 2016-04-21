@@ -16,16 +16,14 @@ sub new {
   if (ref $root eq ref {} && !$opts) {
     $opts = $root; $root = undef;
   }
-  $root ||= Cwd::cwd();
-  bless {%{ $opts|| {} }, DISTROOT => $root, DIST => $root}, $class;
+  $opts ||= {};
+  bless $opts, $class;
 }
 
 # adapted from PAUSE::mldistwatch#check_for_new
 sub parse {
   my ($self, $root) = @_;
-  if ($root) {
-    $self->{DISTROOT} = $self->{DIST} = $root;
-  }
+  $self->{DISTROOT} = $self->{DIST} = $root ||= Cwd::cwd();
 
   $self->_read_dist;
   $self->_extract_meta;

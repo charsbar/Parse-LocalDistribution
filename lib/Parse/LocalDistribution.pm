@@ -17,14 +17,20 @@ sub new {
     $opts = $root; $root = undef;
   }
   $opts ||= {};
+  $opts->{DISTROOT} = $root;
   bless $opts, $class;
 }
 
 # adapted from PAUSE::mldistwatch#check_for_new
 sub parse {
   my ($self, $root) = @_;
-  $self->{DISTROOT} = $self->{DIST} = $root ||= Cwd::cwd();
+  if ($root) {
+    $self->{DISTROOT} = $root;
+  } elsif (!$self->{DISTROOT}) {
+    $self->{DISTROOT} = Cwd::cwd();
+  }
 
+  $self->{DIST} = $self->{DISTROOT};
   $self->_read_dist;
   $self->_extract_meta;
   $self->_examine_pms;

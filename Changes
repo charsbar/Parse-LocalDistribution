@@ -1,5 +1,9 @@
 Revision history for Parse-LocalDistribution
 
+0.18 2016/04/24
+  - fixed a regression introduced in 0.17 which ignored a path passed
+    to new()
+
 0.17 2016/04/21
   - benchmark revealed unnecessary cwd() took more time than
     expected/wanted

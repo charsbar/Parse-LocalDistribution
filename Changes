@@ -1,5 +1,9 @@
 Revision history for Parse-LocalDistribution
 
+0.19 2016/11/03
+  - ignore a few directories like examples, demo and such, as PAUSE
+    now does
+
 0.18 2016/04/24
   - fixed a regression introduced in 0.17 which ignored a path passed
     to new()

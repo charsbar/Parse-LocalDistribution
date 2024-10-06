@@ -9,7 +9,7 @@ use File::Spec;
 use File::Find;
 use Cwd ();
 
-our $VERSION = '0.19';
+our $VERSION = '0.20';
 
 sub new {
   my ($class, $root, $opts) = @_;

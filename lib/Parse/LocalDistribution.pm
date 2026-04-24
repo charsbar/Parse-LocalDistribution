@@ -80,7 +80,10 @@ sub _extract_meta {
   for my $metafile ($json || $yaml) {
     my $metafile_abs = File::Spec->catfile($self->{DISTROOT}, $metafile);
     $metafile_abs =~ s|\\|/|g;
-    if (-s $metafile_abs) {
+    if (-l $metafile_abs) {
+      my $err = "found $metafile but it was a symlink, ignoring";
+      $self->{METAFILE} = $err;
+    } elsif (-s $metafile_abs) {
       $self->{METAFILE} = $metafile;
       my $ok = eval {
         $self->{META_CONTENT} = Parse::CPAN::Meta->load_file($metafile_abs); 1
